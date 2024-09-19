@@ -23,7 +23,6 @@ This project contains a monorepo setup using NX, featuring a **React** app for w
   - **Step 3**: An option is provided to either submit or fill the form again.
 
 ### React App (Web)
-<img width="1240" alt="Screenshot 2024-09-19 at 9 40 04 PM" src="https://github.com/user-attachments/assets/60d86053-4486-4ba0-8e39-c729921c493e">
 - **Fully Responsive**: The web app is fully responsive and styled using **Tailwind CSS**.
 - **Multi-Step Form**:
   - **Step 1**: Prompt the user to start filling in details.
