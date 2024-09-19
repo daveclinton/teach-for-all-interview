@@ -5,6 +5,7 @@ This project contains a **monorepo** setup using **NX**, which includes two appl
 ## Features
 
 ### React Native Expo App (Mobile)
+https://github.com/user-attachments/assets/febd02dd-0bb3-4c2a-8dcc-26c3ae27b9e0
 - **Custom Splash Screen**: A personalized splash screen that is displayed when the app starts.
 - **Multi-Step Form**:
   - **Step 1**: The user is prompted with an initial action or question.
@@ -12,6 +13,7 @@ This project contains a **monorepo** setup using **NX**, which includes two appl
   - **Step 3**: After completing the form, the user has an option to either submit or start over and fill the form again.
 
 ### React App (Web)
+https://github.com/user-attachments/assets/f141408c-7da9-491c-9889-488000997b2e
 - **Fully Responsive**: The web app is fully responsive, using **Tailwind CSS** to ensure it works well across devices of different sizes.
 - **Multi-Step Form**:
   - **Step 1**: The user is prompted to start filling in details.
@@ -36,12 +38,4 @@ Before you can run the project, ensure you have the following installed on your 
 - A package manager: **npm**, **Yarn**, or **Bun**
 - **NX CLI**: You can install this globally using:
   ```bash
-
-https://github.com/user-attachments/assets/febd02dd-0bb3-4c2a-8dcc-26c3ae27b9e0
-
-
-
-https://github.com/user-attachments/assets/f141408c-7da9-491c-9889-488000997b2e
-
-
   npm install -g nx
