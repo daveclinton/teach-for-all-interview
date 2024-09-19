@@ -2,16 +2,6 @@
 
 This project contains a monorepo setup using NX, featuring a **React** app for web and a **React Native Expo** app for mobile. Both apps share logic and validation using **Zod** and provide a dynamic, multi-step form experience.
 
-## Table of Contents
-- [Teach for All Interview with React and React Native](#teach-for-all-interview-with-react-and-react-native)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-    - [React Native Expo App (Mobile)](#react-native-expo-app-mobile)
-    - [React App (Web)](#react-app-web)
-  - [Project Structure](#project-structure)
-  - [Prerequisites](#prerequisites)
-  - [Setup Instructions](#setup-instructions)
-
 ## Features
 
 ### React Native Expo App (Mobile)
