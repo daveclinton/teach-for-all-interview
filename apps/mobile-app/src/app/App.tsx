@@ -9,6 +9,7 @@ import {
   Animated,
   ViewStyle,
 } from 'react-native';
+import { HomeScreen } from '@teach-for-all/screens';
 
 // Splash Screen component
 const AnimatedShape: React.FC<{
@@ -106,16 +107,7 @@ export const App: React.FC = () => {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}
         >
-          <View style={styles.section}>
-            <Text style={styles.textLg}>Hello there,</Text>
-            <Text
-              style={[styles.textXL, styles.appTitleText]}
-              testID="heading"
-              role="heading"
-            >
-              Welcome MobileApp
-            </Text>
-          </View>
+          <HomeScreen />
         </ScrollView>
       </SafeAreaView>
     </>
@@ -125,20 +117,6 @@ export const App: React.FC = () => {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: '#ffffff',
-  },
-  section: {
-    marginVertical: 12,
-    marginHorizontal: 12,
-  },
-  textLg: {
-    fontSize: 24,
-  },
-  textXL: {
-    fontSize: 48,
-  },
-  appTitleText: {
-    paddingTop: 12,
-    fontWeight: '500',
   },
 });
 

@@ -19,15 +19,18 @@ const customConfig = {
   resolver: {
     assetExts: assetExts.filter((ext) => ext !== 'svg'),
     sourceExts: [...sourceExts, 'cjs', 'mjs', 'svg'],
+    // Ensure that Metro resolves libraries within the workspace
+    nodeModulesPaths: [
+      `${__dirname}/../../node_modules`,  // Points to root node_modules
+      `${__dirname}/../../libs/screens/src`,  // Add your libs/screens path here
+    ],
   },
 };
 
 module.exports = withNxMetro(mergeConfig(defaultConfig, customConfig), {
-  // Change this to true to see debugging info.
-  // Useful if you have issues resolving modules
   debug: false,
-  // all the file extensions used for imports other than 'ts', 'tsx', 'js', 'jsx', 'json'
   extensions: [],
-  // Specify folders to watch, in addition to Nx defaults (workspace libraries and node_modules)
-  watchFolders: [],
+  watchFolders: [
+    `${__dirname}/../../libs`,  // Add workspace libs to watch folders
+  ],
 });
