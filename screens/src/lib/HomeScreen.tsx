@@ -100,16 +100,16 @@ const HomeScreen: React.FC = () => {
       <Modal
         visible={isAddFieldModalVisible}
         transparent={true}
-        animationType="slide"
+        animationType="fade"
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Add New Field</Text>
+            <Text style={styles.modalTitle}>Add Custom Field</Text>
             <TextInput
               style={styles.modalInput}
               value={newFieldName}
               onChangeText={setNewFieldName}
-              placeholder="Enter field name"
+              placeholder="Enter Custom Name"
             />
             <View style={styles.modalButtons}>
               <TouchableOpacity
@@ -224,11 +224,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   modalButtonPrimary: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#E3B5A4',
     borderRadius: 5,
   },
   modalButtonText: {
-    color: '#007AFF',
+    color: '#000',
     fontSize: 16,
   },
 });
