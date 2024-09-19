@@ -31,7 +31,7 @@ const AnimatedShape: React.FC<{
         useNativeDriver: true,
       }),
     ]).start();
-  }, []);
+  }, [fadeAnim, moveAnim]);
 
   return (
     <Animated.View
