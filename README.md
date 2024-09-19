@@ -36,4 +36,12 @@ Before you can run the project, ensure you have the following installed on your 
 - A package manager: **npm**, **Yarn**, or **Bun**
 - **NX CLI**: You can install this globally using:
   ```bash
+
+https://github.com/user-attachments/assets/febd02dd-0bb3-4c2a-8dcc-26c3ae27b9e0
+
+
+
+https://github.com/user-attachments/assets/f141408c-7da9-491c-9889-488000997b2e
+
+
   npm install -g nx
