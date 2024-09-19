@@ -2,16 +2,25 @@ import React, { useRef, useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
   StatusBar,
   Animated,
   ViewStyle,
 } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { HomeScreen } from '@teach-for-all/screens';
 
-// Splash Screen component
+import { DefaultTheme } from 'react-native-paper';
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#E3B5A4',
+  },
+};
+
 const AnimatedShape: React.FC<{
   style: ViewStyle;
   children: React.ReactNode;
@@ -81,7 +90,6 @@ const SplashScreen: React.FC = () => {
 
 export const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
-  const scrollViewRef = useRef<null | ScrollView>(null);
 
   useEffect(() => {
     // Hide splash screen after 3 seconds
@@ -97,28 +105,14 @@ export const App: React.FC = () => {
   }
 
   return (
-    <>
+    <PaperProvider theme={theme}>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView
-          ref={(ref) => {
-            scrollViewRef.current = ref;
-          }}
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}
-        >
-          <HomeScreen />
-        </ScrollView>
+        <HomeScreen />
       </SafeAreaView>
-    </>
+    </PaperProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: '#ffffff',
-  },
-});
 
 const splashStyles = StyleSheet.create({
   container: {

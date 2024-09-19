@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@teach-for-all/screens": ["screens/src/index.ts"]
+      "@teach-for-all/components": ["components/src/index.ts"],
+      "@teach-for-all/screens": ["screens/src/index.ts"],
+      "@teach-for-all/validation": ["validation/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

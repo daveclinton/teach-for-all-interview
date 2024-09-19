@@ -8,11 +8,18 @@ import {
   TouchableOpacity,
   Modal,
 } from 'react-native';
+import {
+  FormData,
+  validateForm,
+  validateField,
+} from '@teach-for-all/validation';
+import { Button, Snackbar } from 'react-native-paper';
 
 interface FormField {
-  key: string;
+  key: keyof FormData | string;
   label: string;
   value: string;
+  error?: string;
 }
 
 const HomeScreen: React.FC = () => {
@@ -26,6 +33,11 @@ const HomeScreen: React.FC = () => {
   const [additionalFields, setAdditionalFields] = useState<FormField[]>([]);
   const [isAddFieldModalVisible, setIsAddFieldModalVisible] = useState(false);
   const [newFieldName, setNewFieldName] = useState('');
+  const [visible, setVisible] = React.useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+
+  const onDismissSnackBar = () => setVisible(false);
 
   const handleInputChange = (
     text: string,
@@ -35,10 +47,16 @@ const HomeScreen: React.FC = () => {
     if (isAdditional) {
       const newAdditionalFields = [...additionalFields];
       newAdditionalFields[index].value = text;
+      newAdditionalFields[index].error = undefined;
       setAdditionalFields(newAdditionalFields);
     } else {
       const newFormFields = [...formFields];
       newFormFields[index].value = text;
+      const { error } = validateField(
+        newFormFields[index].key as keyof FormData,
+        text
+      );
+      newFormFields[index].error = error || undefined;
       setFormFields(newFormFields);
     }
   };
@@ -63,6 +81,41 @@ const HomeScreen: React.FC = () => {
       hideAddFieldModal();
     }
   };
+  const validateFormFields = (): boolean => {
+    const formData: Partial<FormData> = formFields.reduce((acc, field) => {
+      acc[field.key as keyof FormData] = field.value;
+      return acc;
+    }, {} as Partial<FormData>);
+    const { success, errors } = validateForm(formData);
+    const updatedFormFields = formFields.map((field) => {
+      const error = errors
+        ? errors[field.key as keyof typeof errors]
+        : undefined;
+      return {
+        ...field,
+        error,
+      };
+    });
+    setFormFields(updatedFormFields);
+    const updatedAdditionalFields = additionalFields.map((field) => ({
+      ...field,
+      error: field.value.trim() === '' ? 'This field is required' : undefined,
+    }));
+
+    setAdditionalFields(updatedAdditionalFields);
+
+    // Return success and check if there are no errors in additionalFields
+    return success && !updatedAdditionalFields.some((field) => field.error);
+  };
+
+  const handleSubmit = () => {
+    if (validateFormFields()) {
+      console.log('Form is valid, submit the data');
+      onToggleSnackBar();
+    } else {
+      console.log('Form is invalid');
+    }
+  };
 
   const renderField = (
     field: FormField,
@@ -72,13 +125,14 @@ const HomeScreen: React.FC = () => {
     <View key={field.key} style={styles.fieldContainer}>
       <Text style={styles.label}>{field.label}</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, field.error && styles.inputError]}
         value={field.value}
         onChangeText={(text: string) =>
           handleInputChange(text, index, isAdditional)
         }
         placeholder={`Enter ${field.label.toLowerCase()}`}
       />
+      {field.error && <Text style={styles.errorText}>{field.error}</Text>}
     </View>
   );
 
@@ -86,17 +140,19 @@ const HomeScreen: React.FC = () => {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.formContainer}>
+          <Text style={{ fontSize: 24 }}>Fill your personal details</Text>
           {formFields.map((field, index) => renderField(field, index))}
           {additionalFields.map((field, index) =>
             renderField(field, index, true)
           )}
+          <Button icon="plus" mode="outlined" onPress={showAddFieldModal}>
+            Add New Field
+          </Button>
+          <Button mode="contained" onPress={handleSubmit}>
+            Submit Data
+          </Button>
         </View>
       </ScrollView>
-
-      <TouchableOpacity style={styles.fab} onPress={showAddFieldModal}>
-        <Text style={styles.fabIcon}>Add New Field</Text>
-      </TouchableOpacity>
-
       <Modal
         visible={isAddFieldModalVisible}
         transparent={true}
@@ -128,6 +184,18 @@ const HomeScreen: React.FC = () => {
           </View>
         </View>
       </Modal>
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: 'Close',
+          onPress: () => {
+            // Do something
+          },
+        }}
+      >
+        You have succesfully submitted your data
+      </Snackbar>
     </View>
   );
 };
@@ -155,7 +223,8 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     marginHorizontal: 12,
-    paddingBottom: 80,
+    paddingVertical: 40,
+    gap: 10,
   },
   fieldContainer: {
     marginBottom: 16,
@@ -231,6 +300,15 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 16,
   },
+  inputError: {},
+  errorText: {},
+  submitButton: {
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: 'blue',
+    justifyContent: 'center',
+  },
+  submitButtonText: {},
 });
 
 export default HomeScreen;
