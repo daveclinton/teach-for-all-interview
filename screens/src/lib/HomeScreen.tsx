@@ -13,7 +13,7 @@ import {
   validateForm,
   validateField,
 } from '@teach-for-all/validation';
-import { Button, Snackbar, ProgressBar } from 'react-native-paper';
+import { Button, ProgressBar } from 'react-native-paper';
 
 interface FormField {
   key: keyof FormData | string;
@@ -34,11 +34,6 @@ const HomeScreen: React.FC = () => {
   const [additionalFields, setAdditionalFields] = useState<FormField[]>([]);
   const [isAddFieldModalVisible, setIsAddFieldModalVisible] = useState(false);
   const [newFieldName, setNewFieldName] = useState('');
-  const [visible, setVisible] = React.useState(false);
-
-  const onToggleSnackBar = () => setVisible(!visible);
-
-  const onDismissSnackBar = () => setVisible(false);
 
   const handleInputChange = (
     text: string,
@@ -113,7 +108,6 @@ const HomeScreen: React.FC = () => {
     if (validateFormFields()) {
       console.log('Form is valid, submit the data');
       setStep(3);
-      onToggleSnackBar();
     } else {
       console.log('Form is invalid');
     }
@@ -180,7 +174,7 @@ const HomeScreen: React.FC = () => {
             <Button
               mode="contained"
               onPress={() => {
-                setStep(1);
+                setStep(2);
                 setFormFields(
                   formFields.map((field) => ({ ...field, value: '' }))
                 );
@@ -233,18 +227,6 @@ const HomeScreen: React.FC = () => {
           </View>
         </View>
       </Modal>
-      <Snackbar
-        visible={visible}
-        onDismiss={onDismissSnackBar}
-        action={{
-          label: 'Close',
-          onPress: () => {
-            // Do something
-          },
-        }}
-      >
-        You have successfully submitted your data
-      </Snackbar>
     </View>
   );
 };

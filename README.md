@@ -1,43 +1,51 @@
-# TeachForAll
+# Teach for All Interview with React and React Native 
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+This project contains a monorepo setup using NX, featuring a **React** app for web and a **React Native Expo** app for mobile. Both apps share logic and validation using **Zod** and provide a dynamic, multi-step form experience.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+## Table of Contents
+- [Teach for All Interview with React and React Native](#teach-for-all-interview-with-react-and-react-native)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+    - [React Native Expo App (Mobile)](#react-native-expo-app-mobile)
+    - [React App (Web)](#react-app-web)
+  - [Project Structure](#project-structure)
+  - [Prerequisites](#prerequisites)
+  - [Setup Instructions](#setup-instructions)
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/expo?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Features
 
-## Run tasks
+### React Native Expo App (Mobile)
+- **Custom Splash Screen**: A personalized splash screen is shown when the app starts.
+- **Multi-Step Form**:
+  - **Step 1**: Prompt the user with an initial action.
+  - **Step 2**: Fill in details.
+  - **Step 3**: An option is provided to either submit or fill the form again.
 
-To run the dev server for your app, use:
+### React App (Web)
+- **Fully Responsive**: The web app is fully responsive and styled using **Tailwind CSS**.
+- **Multi-Step Form**:
+  - **Step 1**: Prompt the user to start filling in details.
+  - **Step 2**: A dynamic form allows the user to add or remove fields as needed.
+  - **Step 3**: A success page that completes the form submission.
 
-```sh
-npx nx serve mobile-app
-```
+Both apps share validation logic, ensuring consistent form validation between mobile and web platforms.
 
-To create a production bundle:
+## Project Structure
 
-```sh
-npx nx build mobile-app
-```
+- `/apps/web`: The React web app (served via `npx nx serve web`).
+- `/apps/mobile-app`: The React Native Expo app (run via `npx nx run mobile-app:start --reset-cache`).
+- `/libs`: Shared libraries including validation logic with **Zod**.
 
-To see all available targets to run for a project, run:
+## Prerequisites
+Ensure you have the following installed:
+- **Node.js** (version 16.x or higher)
+- **npm** or **Yarn** or **Bun**
+- **NX** (`npm install -g nx` or `yarn global add nx`)
+- **Expo CLI** (`npm install -g expo-cli`)
 
-```sh
-npx nx show project mobile-app
-```
-Build
+## Setup Instructions
 
-```sh
-npx nx build mobile-app
-```
-# Generate UI lib
-
-```sh
-nx g @nx/react-native:lib ui
-```
-# Add a component
-```sh
-nx g \
-@nx/react-native:component \
-ui/src/lib/button
-```
+1. **Clone the repository**:
+   ```bash
+   git clone <your-repo-url>
+   cd <your-repo-name>
