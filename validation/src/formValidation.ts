@@ -1,11 +1,10 @@
 import { z } from 'zod';
-import { ZodError } from 'zod';
 
 export const nameSchema = z.string().min(1, { message: 'Name is required' });
 
 export const emailSchema = z
   .string()
-  .email({ message: 'Invalid email address' });
+  .email({ message: 'Enter valid email adress' });
 
 export const phoneSchema = z
   .string()

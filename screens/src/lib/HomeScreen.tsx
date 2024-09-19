@@ -13,7 +13,7 @@ import {
   validateForm,
   validateField,
 } from '@teach-for-all/validation';
-import { Button, Snackbar } from 'react-native-paper';
+import { Button, Snackbar, ProgressBar } from 'react-native-paper';
 
 interface FormField {
   key: keyof FormData | string;
@@ -23,6 +23,7 @@ interface FormField {
 }
 
 const HomeScreen: React.FC = () => {
+  const [step, setStep] = useState(1);
   const [formFields, setFormFields] = useState<FormField[]>([
     { key: 'name', label: 'Name', value: '' },
     { key: 'email', label: 'Email', value: '' },
@@ -81,6 +82,7 @@ const HomeScreen: React.FC = () => {
       hideAddFieldModal();
     }
   };
+
   const validateFormFields = (): boolean => {
     const formData: Partial<FormData> = formFields.reduce((acc, field) => {
       acc[field.key as keyof FormData] = field.value;
@@ -104,13 +106,13 @@ const HomeScreen: React.FC = () => {
 
     setAdditionalFields(updatedAdditionalFields);
 
-    // Return success and check if there are no errors in additionalFields
     return success && !updatedAdditionalFields.some((field) => field.error);
   };
 
   const handleSubmit = () => {
     if (validateFormFields()) {
       console.log('Form is valid, submit the data');
+      setStep(3);
       onToggleSnackBar();
     } else {
       console.log('Form is invalid');
@@ -125,7 +127,7 @@ const HomeScreen: React.FC = () => {
     <View key={field.key} style={styles.fieldContainer}>
       <Text style={styles.label}>{field.label}</Text>
       <TextInput
-        style={[styles.input, field.error && styles.inputError]}
+        style={[styles.input]}
         value={field.value}
         onChangeText={(text: string) =>
           handleInputChange(text, index, isAdditional)
@@ -136,23 +138,68 @@ const HomeScreen: React.FC = () => {
     </View>
   );
 
+  const renderStepContent = () => {
+    switch (step) {
+      case 1:
+        return (
+          <View style={styles.stepContainer}>
+            <Text style={styles.stepTitle}>Step 1: Get Started</Text>
+            <Text style={styles.stepDescription}>
+              Welcome! Please fill out our form to provide your personal
+              details.
+            </Text>
+            <Button mode="contained" onPress={() => setStep(2)}>
+              Start Form
+            </Button>
+          </View>
+        );
+      case 2:
+        return (
+          <View style={styles.formContainer}>
+            <Text style={styles.stepTitle}>Step 2: Fill Your Details</Text>
+            {formFields.map((field, index) => renderField(field, index))}
+            {additionalFields.map((field, index) =>
+              renderField(field, index, true)
+            )}
+            <Button icon="plus" mode="outlined" onPress={showAddFieldModal}>
+              Add New Field
+            </Button>
+            <Button mode="contained" onPress={handleSubmit}>
+              Submit Data
+            </Button>
+          </View>
+        );
+      case 3:
+        return (
+          <View style={styles.successContainer}>
+            <Text style={styles.successText}>
+              Your data has been submitted successfully!
+            </Text>
+            <Button
+              mode="contained"
+              onPress={() => {
+                setStep(1);
+                setFormFields(
+                  formFields.map((field) => ({ ...field, value: '' }))
+                );
+                setAdditionalFields([]);
+              }}
+            >
+              Start Over
+            </Button>
+          </View>
+        );
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.formContainer}>
-          <Text style={{ fontSize: 24 }}>Fill your personal details</Text>
-          {formFields.map((field, index) => renderField(field, index))}
-          {additionalFields.map((field, index) =>
-            renderField(field, index, true)
-          )}
-          <Button icon="plus" mode="outlined" onPress={showAddFieldModal}>
-            Add New Field
-          </Button>
-          <Button mode="contained" onPress={handleSubmit}>
-            Submit Data
-          </Button>
-        </View>
-      </ScrollView>
+      <ProgressBar
+        progress={step / 3}
+        color="#E3B5A4"
+        style={styles.progressBar}
+      />
+      <ScrollView style={styles.scrollView}>{renderStepContent()}</ScrollView>
       <Modal
         visible={isAddFieldModalVisible}
         transparent={true}
@@ -194,7 +241,7 @@ const HomeScreen: React.FC = () => {
           },
         }}
       >
-        You have succesfully submitted your data
+        You have successfully submitted your data
       </Snackbar>
     </View>
   );
@@ -207,19 +254,24 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-  textLg: {
+  progressBar: {
+    marginBottom: 10,
+  },
+  stepContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  stepTitle: {
     fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
-  textXL: {
-    fontSize: 48,
-  },
-  appTitleText: {
-    paddingTop: 12,
-    fontWeight: '500',
-  },
-  section: {
-    marginVertical: 12,
-    marginHorizontal: 12,
+  stepDescription: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 20,
   },
   formContainer: {
     marginHorizontal: 12,
@@ -240,24 +292,12 @@ const styles = StyleSheet.create({
     padding: 8,
     fontSize: 16,
   },
-  fab: {
-    position: 'absolute',
-    padding: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    right: 20,
-    bottom: 20,
-    backgroundColor: '#E3B5A4',
-    borderRadius: 12,
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+  inputError: {
+    borderColor: '#E70E02',
   },
-  fabIcon: {
-    fontSize: 18,
-    color: 'white',
+  errorText: {
+    fontSize: 12,
+    color: '#E70E02',
   },
   modalContainer: {
     flex: 1,
@@ -300,15 +340,17 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 16,
   },
-  inputError: {},
-  errorText: {},
-  submitButton: {
-    width: '100%',
+  successContainer: {
     alignItems: 'center',
-    backgroundColor: 'blue',
     justifyContent: 'center',
+    padding: 20,
   },
-  submitButtonText: {},
+  successText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
 });
 
 export default HomeScreen;
