@@ -107,7 +107,9 @@ export const App: React.FC = () => {
   return (
     <PaperProvider theme={theme}>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+      >
         <HomeScreen />
       </SafeAreaView>
     </PaperProvider>
@@ -120,6 +122,7 @@ const splashStyles = StyleSheet.create({
     backgroundColor: '#E3B5A4',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 20,
   },
   text: {
     color: 'white',

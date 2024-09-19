@@ -143,7 +143,7 @@ const HomeScreen: React.FC = () => {
       case 1:
         return (
           <View style={styles.stepContainer}>
-            <Text style={styles.stepTitle}>Step 1: Get Started</Text>
+            <Text style={styles.stepTitle}>Get Started</Text>
             <Text style={styles.stepDescription}>
               Welcome! Please fill out our form to provide your personal
               details.
@@ -155,19 +155,21 @@ const HomeScreen: React.FC = () => {
         );
       case 2:
         return (
-          <View style={styles.formContainer}>
-            <Text style={styles.stepTitle}>Step 2: Fill Your Details</Text>
-            {formFields.map((field, index) => renderField(field, index))}
-            {additionalFields.map((field, index) =>
-              renderField(field, index, true)
-            )}
-            <Button icon="plus" mode="outlined" onPress={showAddFieldModal}>
-              Add New Field
-            </Button>
-            <Button mode="contained" onPress={handleSubmit}>
-              Submit Data
-            </Button>
-          </View>
+          <ScrollView>
+            <View style={styles.formContainer}>
+              <Text style={styles.stepTitle}>Fill Your Details</Text>
+              {formFields.map((field, index) => renderField(field, index))}
+              {additionalFields.map((field, index) =>
+                renderField(field, index, true)
+              )}
+              <Button icon="plus" mode="outlined" onPress={showAddFieldModal}>
+                Add New Field
+              </Button>
+              <Button mode="contained" onPress={handleSubmit}>
+                Submit Data
+              </Button>
+            </View>
+          </ScrollView>
         );
       case 3:
         return (
@@ -193,13 +195,13 @@ const HomeScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <ProgressBar
         progress={step / 3}
         color="#E3B5A4"
         style={styles.progressBar}
       />
-      <ScrollView style={styles.scrollView}>{renderStepContent()}</ScrollView>
+      {renderStepContent()}
       <Modal
         visible={isAddFieldModalVisible}
         transparent={true}
@@ -251,9 +253,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  scrollView: {
-    flex: 1,
-  },
+  scrollView: {},
   progressBar: {
     marginBottom: 10,
   },
@@ -341,6 +341,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   successContainer: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
