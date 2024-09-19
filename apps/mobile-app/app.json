@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "splash": {
       "resizeMode": "contain",
-      "backgroundColor": "#FF00FF"
+      "backgroundColor": "#E3B5A4"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,7 +17,7 @@
       "supportsTablet": true,
       "splash": {
         "resizeMode": "cover",
-        "backgroundColor": "#FF00FF",
+        "backgroundColor": "#E3B5A4",
         "tabletImage":  "./assets/splash.png"
       }
     },

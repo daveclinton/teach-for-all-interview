@@ -68,7 +68,7 @@ const SplashScreen: React.FC = () => {
       <AnimatedShape style={splashStyles.centerRightShape}>
         <View style={[splashStyles.shape, splashStyles.star]} />
       </AnimatedShape>
-      <Text style={splashStyles.text}>Home Tutorly</Text>
+      <Text style={splashStyles.text}>Mobile SplashScreen</Text>
       <AnimatedShape style={splashStyles.bottomLeftShape}>
         <View style={[splashStyles.shape, splashStyles.diamond]} />
       </AnimatedShape>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
 const splashStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FF00FF',
+    backgroundColor: '#E3B5A4',
     alignItems: 'center',
     justifyContent: 'center',
   },
